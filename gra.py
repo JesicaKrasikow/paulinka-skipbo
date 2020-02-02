@@ -13,13 +13,14 @@ class SkipBo:
         self.discard_pile = [[[], [], [], []], [[], [], [], []]]
         self.tmp_deck = []
 
+
         standard_deck = [Card.ONE, Card.TWO, Card.THREE, Card.FOUR, Card.FIVE,
                          Card.SIX, Card.SEVEN, Card.EIGHT, Card.NINE, Card.TEN,
                          Card.ELEVEN, Card.TWELVE, Card.SKIPBO] * 12
         random.shuffle(standard_deck)
         self.main_stack = standard_deck
 
-        for i in range(0, 30):
+        for i in range(0, 5):
             self.players_stack[0].append(self.main_stack[0])
             self.main_stack = self.main_stack[1:]
             self.players_stack[1].append(self.main_stack[1])
@@ -100,11 +101,22 @@ class SkipBo:
             if top_card_game_stack == Card.SKIPBO:
                 skipped = 0
                 index = len(self.game_stacks[game_stack_id]) - 1
-                while self.game_stacks[game_stack_id][index] == Card.SKIPBO:
+                # dopóki karta na stosie to SKIPBO,
+                # czyli zajmujemy się przypadkiem, gdy użytkownik kładzie SKIPBO NA SKIPBO
+                while self.game_stacks[game_stack_id][index] == Card.SKIPBO\
+                        and index > 0:
                     index = index - 1
                     skipped = skipped + 1
+                # jeżeli rzucana karta to ostatnia karta przed skipbo + ilość skipów + 1, to ok
                 if card == self.game_stacks[game_stack_id][index] + skipped + 1:
                     return 0
+                # ale to nie działa, gdy na stosie jest tylko SKIPBO, bo wtedy self.game_stacks[game_stack_id][index] + skipped + 1 = 14
+                elif self.game_stacks[game_stack_id][index] + skipped + 1 == 14:
+                    if card == Card.TWO:
+                        return 0
+                    else:
+                        return 1
+                        print("Fałszywy ruch")
                 else:
                     print("Fałszywy ruch")
                     return 1
@@ -122,6 +134,7 @@ class SkipBo:
             self.game_stacks[stack_id].clear()
 
         return 0
+
 
     @staticmethod
     def test_games():
@@ -144,6 +157,12 @@ class SkipBo:
         test_game.players_hand[0] = [Card.ONE, Card.SKIPBO, Card.TWO, Card.FIVE, Card.FOUR]
         assert test_game.move_from_hand(Place.STACK, Card.FOUR, 0, 0) is 1
         assert test_game.move_from_hand(Place.STACK, Card.FIVE, 0, 0) is 0
+
+        test_game.game_stacks[0] = []
+        test_game.players_stack[0] = [Card.SKIPBO]
+        test_game.players_hand[0] = [Card.TWO]
+        assert test_game.move_from_players(Card.SKIPBO, 0, 0) is 0
+        #assert test_game.move_from_hand(Place.STACK, Card.TWO, 0, 0) is 0
 
         # Case2: From hand to discard
         test_game.players_hand[0] = [Card.ONE, Card.SKIPBO, Card.TWO, Card.FIVE, Card.FOUR]
@@ -174,12 +193,13 @@ class SkipBo:
         test_game.players_hand[0] = [Card.SKIPBO]
         print(test_game.game_stacks[0])
         assert test_game.move_from_hand(Place.STACK, Card.SKIPBO, 0, 0) is 0
-        print(test_game.game_stacks[0])
+        #assert test_game.game_stacks[0] is []
 
         print("All fine!")
 
 
 class Card(IntEnum):
+    EMPTY = 0
     ONE = 1
     TWO = 2
     THREE = 3

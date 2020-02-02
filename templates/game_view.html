@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{%  block body %}
+	<style>
+
+	</style>
+
+    <h4>Stosy główne</h4>
+	<div class="card-deck" style="width: fit-content;" id="card_deck0">
+	  <div class="card game_stack" id="gs0" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_gs[0] != 0 %}
+			<img src="static/images/{{ cards_in_gs[0] }}.svg">
+		  {% endif %}
+	  </div>
+	  <div class="card game_stack" id="gs1" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_gs[1] != 0 %}
+			<img src="static/images/{{ cards_in_gs[1] }}.svg">
+		  {% endif %}
+	  </div>
+	  <div class="card game_stack" id="gs2" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_gs[2] != 0 %}
+			<img src="static/images/{{ cards_in_gs[2] }}.svg">
+		  {% endif %}
+      </div>
+    <div class="card game_stack" id="gs3" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_gs[3] != 0 %}
+			<img src="static/images/{{ cards_in_gs[3] }}.svg">
+		  {% endif %}
+    </div>
+	</div>
+
+    <h4>Karty w ręce gracza</h4>
+    <div class="d-flex flex-row">
+        <div class="p-2">
+            {% if cards_in_hand[0] != 0 %}
+                <img id = "handcard0" draggable="true" ondragstart="drag(event)" src="/static/images/{{ cards_in_hand[0] }}.svg">
+            {% endif %}
+            {% if cards_in_hand[1] != 0 %}
+                <img id = "handcard1" draggable="true" ondragstart="drag(event)" src="/static/images/{{ cards_in_hand[1] }}.svg">
+            {% endif %}
+            {% if cards_in_hand[2] != 0 %}
+                <img id = "handcard2" draggable="true" ondragstart="drag(event) "src="/static/images/{{ cards_in_hand[2] }}.svg">
+            {% endif %}
+            {% if cards_in_hand[3] != 0 %}
+                <img id = "handcard3" draggable="true" ondragstart="drag(event)" src="/static/images/{{ cards_in_hand[3] }}.svg">
+            {% endif %}
+            {% if cards_in_hand[4] != 0 %}
+                <img id = "handcard4" draggable="true" ondragstart="drag(event)" src="/static/images/{{ cards_in_hand[4] }}.svg">
+            {% endif %}
+        </div>
+
+        <div class="p-2" >
+            <img id = "ps" style="padding-left: 4rem" draggable="true" ondragstart="drag(event)" src="/static/images/{{ players_stack }}.svg">
+            <p>Ilość kart do końca gry: {{ len_players_stack }}</p>
+        </div>
+
+    </div>
+
+
+    <h4>Stosy pomocnicze</h4>
+
+	<div class="card-deck" style="width: fit-content;" id="card_deck0">
+	  <div class="card" id = "discard0" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_discard[0] != 0 %}
+			<img id="discardcard0" draggable="true" ondragstart="drag(event)" src="static/images/{{ cards_in_discard[0] }}.svg">
+		  {% endif %}
+	  </div>
+	  <div class="card" id = "discardcard1" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_discard[1] != 0 %}
+			<img id="discardcard1" draggable="true" ondragstart="drag(event)" src="static/images/{{ cards_in_discard[1] }}.svg">
+		  {% endif %}
+	  </div>
+	  <div class="card" id = "discard2" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 4rem; height: 6rem">
+		  {% if cards_in_discard[2] != 0 %}
+			<img id="discardcard2" draggable="true" ondragstart="drag(event)" src="static/images/{{ cards_in_discard[2] }}.svg">
+		  {% endif %}
+      </div>
+    <div class="card" id = "discard3" ondrop="drop(event)" ondragover="allowDrop(event)"  style="width: 4rem; height: 6rem">
+		  {% if cards_in_discard[3] != 0 %}
+			<img id="discard3card" draggable="true" ondragstart="drag(event)" src="static/images/{{ cards_in_discard[3] }}.svg">
+		  {% endif %}
+    </div>
+	</div>
+
+    <form action="/changeplayer" method="post">
+        <button type="submit" style="margin-top: 3rem;" class="btn btn-primary">Zakończ rundę</button>
+    </form>
+
+{% endblock %}

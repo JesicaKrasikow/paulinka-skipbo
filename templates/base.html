@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>SkipBo</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            function stopProp(ev) {
+                ev.stopPropagation();
+            }
+            function allowDrop(ev) {
+              ev.preventDefault();
+            }
+
+            function drag(ev) {
+              ev.dataTransfer.setData("text", ev.target.id);
+            }
+
+            function drop(ev) {
+                var target = ev.target;
+                if (target.tagName === "IMG")
+                    target = target.parentNode;
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+                target.appendChild(document.getElementById(data));
+                $.post('move', {card: data, target: target.id}, function (response) {
+                    window.location.href = response.redirect;
+                });
+            }
+    </script>
+
+     <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        .content {
+        max-width: 500px;
+        margin: auto;
+        padding: 10px;
+}
+
+        #page-content {
+          flex: 1 0 auto;
+        }
+
+        #sticky-footer {
+          flex-shrink: none;
+        }
+
+         h4 {
+             padding-top: 2rem;
+             padding-bottom: 0.5rem;
+         }
+
+     </style>
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="/">
+                <img src="static/images/skip-bo_logo.png" width="30" height="30" alt="">
+            </a>
+            <p>Tura: <strong>gracz nr {{ current_player }}</strong></p>
+
+        </nav>
+
+         <div class="container content">
+             {% block body %}{% endblock %}
+         </div>
+
+        <footer id="sticky-footer" class="py-4 bg-dark text-white-50" style="margin-top: 2.5rem">
+            <div class="container text-center">
+              <small>Copyright &copy; Paulinka_Python</small>
+            </div>
+        </footer>
+    </body>
+</html>

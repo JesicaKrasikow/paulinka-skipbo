@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{%  block body %}
+
+    <h2>Cel gry</h2>
+    <p>Celem gry jest pozbycie się wszystkich kart ze stosu gracza. Stos gracza na planszy znajduje się po prawej stronie.
+    </p>
+
+    <h2>Stosy główne – zasady</h2>
+    <ul>
+        <li>Gracz może zacząć układać stos od karty z numerem 1 lub od dzikiej karty</li>
+        <li>Gracz układa karty na stosach w kolejności rosnącej korzystając:</li>
+        <ol>
+            <li>Ze swojego stosu, jeżeli pasuje pod względem numerycznym. To priorytetowe źródło – wykorzystanie wszystkich kart z tego stosu sprawia, że gracz wygrywa.</li>
+            <li>Z dobranych pięciu kart. </li>
+            <li>Z wierzchu stosów pomocniczych.</li>
+        </ol>
+        <li>Gracz układa te karty na stosie gry tak długo jak ma możliwość</li>
+        <li>Gdy na stosie znajdą się karty od 1 do 12 w kolejności rosnącej – stos jest zamknięty i zostaje usuwany z planszy. Na tym miejscu można rozpocząć kolejny stos. </li>
+    </ul>
+
+
+    <h2>Stos pomocniczy – zasady</h2>
+    <ul>
+        <li>Gracz może stworzyć maksymalnie 4 stosy pomocnicze</li>
+        <li>W każdej rundzie gracz dokłada 1 kartę do stosów pomocniczych</li>
+        <li>Stosy pomocnicze nie muszę być ułożone w kolejności, mogą zaczynać się od dowolnych liczb – więc w gruncie rzeczy stosy są randomowe, gracz sam ustala swoja strategię</li>
+        <li>Zagrywać można tylko karty z wierzchu stosów.</li>
+    </ul>
+
+
+    <h2>Podsumowanie rozgrywki</h2>
+    <ul>
+        <li>Aplikacja uzupełnia karty w ręce</li>
+        <li>Dodawaj karty do stosów gry, jeśli jest to możliwe (krok opcjonalny): ze stosu gracza, ze stosów pomocniczych, z ręki</li>
+        <li>Dodaj jedną kartę z ręki do stosów pomocniczych</li>
+    </ul>
+
+    <h2>Zakończenie gry</h2>
+    <p>Grę wygrywa gracz, który jako pierwszy pozbędzie się wszystkich kart ze swojego stosu</p>
+
+    <a href="/">Wróć do strony głównej</a>
+
+{% endblock %}
